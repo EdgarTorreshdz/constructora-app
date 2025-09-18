@@ -12,12 +12,15 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Crear directorio de la app
 WORKDIR /app
 
-# Copiar archivos
-COPY . .
+# Copiar definiciones de dependencias primero
+COPY composer.json composer.lock package.json package-lock.json* ./
 
 # Instalar dependencias PHP y JS
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
+
+# Copiar el resto del código
+COPY . .
 
 # Copiar y dar permisos al entrypoint
 COPY entrypoint.sh /entrypoint.sh

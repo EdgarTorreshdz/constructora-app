@@ -1,11 +1,18 @@
 #!/bin/sh
-php artisan config:clear
-php artisan cache:clear
-php artisan route:clear
-php artisan view:clear
+set -e
 
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+# Limpiar caches previos
+php artisan config:clear || true
+php artisan cache:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
 
+# Generar caches solo si existe APP_KEY
+if [ -n "$APP_KEY" ]; then
+  php artisan config:cache || true
+  php artisan route:cache || true
+  php artisan view:cache || true
+fi
+
+# Ejecutar el CMD
 exec "$@"
