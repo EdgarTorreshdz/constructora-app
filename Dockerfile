@@ -12,21 +12,22 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Crear directorio de la app
 WORKDIR /app
 
-# Copiar composer.json y composer.lock primero (para caching)
+# ---- Etapa 1: Composer deps (cache eficiente)
 COPY composer.json composer.lock ./
-
-# Instalar dependencias PHP sin ejecutar scripts (artisan aún no existe)
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Copiar package.json y vite.config.js para instalar dependencias JS
+# ---- Etapa 2: Node deps y build
 COPY package.json package-lock.json* vite.config.js ./
+RUN npm install
 
-RUN npm install && npm run build
+# Copiar resources (necesario para vite build)
+COPY resources ./resources
+RUN npm run build
 
-# Copiar el resto del código (incluye artisan y resources)
+# ---- Etapa 3: copiar todo el código (artisan, rutas, config, etc.)
 COPY . .
 
-# Ahora que artisan existe, ejecutar scripts de Composer
+# Ejecutar scripts de composer que requieren artisan
 RUN composer run-script post-autoload-dump || true
 
 # Permisos para Laravel
@@ -35,7 +36,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && touch storage/logs/laravel.log \
     && chown www-data:www-data storage/logs/laravel.log
 
-# Copiar entrypoint
+# Copiar entrypoint (si lo usas para limpiar caches)
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
