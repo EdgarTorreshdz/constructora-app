@@ -12,21 +12,25 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Crear directorio de la app
 WORKDIR /app
 
-# Copiar definiciones de dependencias primero
-COPY composer.json composer.lock package.json package-lock.json* ./
+# ---- Etapa 1: instalar dependencias PHP sin scripts (cache-friendly)
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Instalar dependencias PHP y JS
-RUN composer install --no-dev --optimize-autoloader
+# ---- Etapa 2: instalar dependencias JS y build
+COPY package.json package-lock.json* ./
 RUN npm install && npm run build
 
-# Copiar el resto del código
+# ---- Etapa 3: copiar todo el código
 COPY . .
+
+# Ejecutar los scripts de composer (ahora sí existe artisan)
+RUN composer run-script post-autoload-dump || true
 
 # Copiar y dar permisos al entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Usamos entrypoint para preparar y luego correr Laravel
+# Usamos entrypoint para limpiar/generar cache de Laravel
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Laravel server con puerto dinámico de Render
