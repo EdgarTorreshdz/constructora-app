@@ -25,7 +25,8 @@ COPY . .
 
 # ---- Etapa 4: build frontend
 RUN npm run build \
-    && ls -la public/build   # 👈 verifica que exista manifest.json
+    && mv public/build/.vite/manifest.json public/build/manifest.json \
+    && ls -la public/build
 
 # Ejecutar scripts de composer
 RUN composer run-script post-autoload-dump || true
