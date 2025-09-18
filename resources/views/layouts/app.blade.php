@@ -32,6 +32,7 @@
 </script>
 @endverbatim
 @vite('resources/js/app.js')
+
 </head>
 <body class="font-sans antialiased text-secondary-500 bg-construction-sand">
     <!-- Header -->

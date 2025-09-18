@@ -1,14 +1,16 @@
+// resources/js/app.js
+import '../css/app.css';  // 👈 agrega esta línea al inicio
+
 // Importa Alpine.js
 import Alpine from 'alpinejs'
 window.Alpine = Alpine
 
-// Registra tus componentes personalizados
 document.addEventListener('alpine:init', () => {
     Alpine.data('counter', (target) => ({
         count: 0,
         init() {
             let current = 0
-            const step = Math.ceil(target / 100) // velocidad
+            const step = Math.ceil(target / 100)
             const interval = setInterval(() => {
                 current += step
                 if (current >= target) {
@@ -17,7 +19,7 @@ document.addEventListener('alpine:init', () => {
                 } else {
                     this.count = current
                 }
-            }, 20) // cada 20ms
+            }, 20)
         }
     }))
 })
@@ -34,5 +36,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Inicia Alpine al final
-Alpine.start()
+Alpine.start();
