@@ -14,6 +14,5 @@ export default defineConfig({
         rollupOptions: {
             input: 'resources/js/app.js',
         },
-        manifestFile: 'public/build/manifest.json', // 👈 forzamos ubicación
     },
 });
