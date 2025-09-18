@@ -20,7 +20,7 @@
     <section class="py-0">
       <div class="grid grid-cols-1 md:grid-cols-2">
         @foreach($services as $service)
-          <div class="relative group overflow-hidden h-160 cursor-pointer">
+            <div class="relative group overflow-hidden h-180 cursor-pointer mb-6 md:mb-0">
             <!-- Imagen -->
             <img src="{{ asset('storage/' . $service->image) }}"
                  alt="{{ $service->title }}"

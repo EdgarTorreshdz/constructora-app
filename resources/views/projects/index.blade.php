@@ -25,25 +25,26 @@
     @if($projects->count() > 0)
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         @foreach($projects as $project)
-          <div class="relative group overflow-hidden rounded-xl shadow-md">
-            <!-- Imagen -->
-            <img src="{{ asset('storage/' . $project->cover_image) }}"
-                 alt="{{ $project->title }}"
-                 class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" loading="lazy">
+          <a href="{{ route('projects.show', $project->slug) }}" class="block">
+  <div class="relative group overflow-hidden rounded-xl shadow-md">
+    <!-- Imagen -->
+    <img src="{{ asset('storage/' . $project->cover_image) }}"
+         alt="{{ $project->title }}"
+         class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" loading="lazy">
 
-            <!-- Overlay -->
-            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition"></div>
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition"></div>
 
-            <!-- Contenido -->
-            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
-              <h3 class="text-2xl font-bold">{{ $project->title }}</h3>
-              <p class="text-sm text-gray-200">{{ $project->short_description }}</p>
-              <a href="{{ route('projects.show', $project->slug) }}"
-                 class="mt-3 inline-block bg-primary-500 text-secondary-700 px-4 py-2 rounded-lg font-semibold opacity-0 group-hover:opacity-100 transition">
-                Ver más →
-              </a>
-            </div>
-          </div>
+    <!-- Contenido -->
+    <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+      <h3 class="text-2xl font-bold">{{ $project->title }}</h3>
+      <p class="text-sm text-gray-200">{{ $project->short_description }}</p>
+      <span class="mt-3 inline-block bg-primary-500 text-secondary-700 px-4 py-2 rounded-lg font-semibold opacity-0 group-hover:opacity-100 transition">
+        Ver más →
+      </span>
+    </div>
+  </div>
+</a>
 
         @endforeach
       </div>

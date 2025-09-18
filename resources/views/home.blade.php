@@ -62,7 +62,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 mx-auto w-11/12 max-w-9xl">
 
     @foreach($featuredProjects as $project)
-      <div class="relative group overflow-hidden h-180 cursor-pointer">
+  <div class="relative group overflow-hidden h-180 cursor-pointer mb-6 md:mb-0">
         <!-- Imagen -->
         <img src="{{ asset('storage/' . $project->cover_image) }}"
              alt="{{ $project->title }}"
@@ -77,9 +77,9 @@
           <h3 class="text-2xl font-bold mb-2">{{ $project->title }}</h3>
           <p class="text-sm max-w-md text-gray-200 mb-4">{{ $project->short_description }}</p>
           <a href="{{ route('projects.show', $project->slug) }}"
-             class="opacity-0 group-hover:opacity-100 mt-2 inline-block bg-primary-500 text-secondary-500 font-semibold px-4 py-2 rounded-lg transition">
+            class="block md:opacity-0 group-hover:opacity-100 mt-2 inline-block bg-primary-500 text-secondary-500 font-semibold px-4 py-2 rounded-lg transition">
             Ver más →
-          </a>
+            </a>
         </div>
       </div>
     @endforeach
