@@ -25,5 +25,9 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && touch storage/logs/laravel.log \
     && chown www-data:www-data storage/logs/laravel.log
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 # Puerto dinámico de Render
 CMD php artisan serve --host=0.0.0.0 --port=$PORT

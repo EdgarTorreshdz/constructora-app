@@ -1,14 +1,13 @@
 #!/bin/sh
 set -e
 
-# Limpiar y regenerar caches de Laravel
-php artisan config:clear || true
-php artisan cache:clear || true
-php artisan route:clear || true
-php artisan view:clear || true
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
 
-php artisan config:cache || true
-php artisan route:cache || true
-php artisan view:cache || true
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 exec "$@"
