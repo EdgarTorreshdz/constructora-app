@@ -62,7 +62,9 @@
             "@php artisan config:clear",
             "@php artisan cache:clear",
             "@php artisan route:clear",
-            "@php artisan view:clear"
+            "@php artisan view:clear",
+            "mkdir -p public/storage",
+            "cp -r storage/app/public/* public/storage/"
         ]
     },
     "extra": {
