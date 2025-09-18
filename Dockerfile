@@ -12,27 +12,12 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Crear directorio de la app
 WORKDIR /app
 
-# ---- Etapa 1: instalar dependencias PHP sin scripts (cache-friendly)
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts
-
-# ---- Etapa 2: instalar dependencias JS y build
-COPY package.json package-lock.json* vite.config.js ./
-COPY resources ./resources
-RUN npm install && npm run build
-
-# ---- Etapa 3: copiar todo el código
+# Copiar archivos
 COPY . .
 
-# Ejecutar los scripts de composer (ahora sí existe artisan)
-RUN composer run-script post-autoload-dump || true
+# Instalar dependencias PHP y JS
+RUN composer install --no-dev --optimize-autoloader
+RUN npm install && npm run build
 
-# Copiar y dar permisos al entrypoint
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Usamos entrypoint para limpiar/generar cache de Laravel
-ENTRYPOINT ["/entrypoint.sh"]
-
-# Laravel server con puerto dinámico de Render
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
+# Puerto dinámico de Render
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
