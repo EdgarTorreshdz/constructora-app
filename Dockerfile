@@ -17,7 +17,8 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # ---- Etapa 2: instalar dependencias JS y build
-COPY package.json package-lock.json* ./
+COPY package.json package-lock.json* vite.config.js ./
+COPY resources ./resources
 RUN npm install && npm run build
 
 # ---- Etapa 3: copiar todo el código
