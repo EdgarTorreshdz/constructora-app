@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Constructora Ejemplo - Construcción de Calidad')
+@section('title', 'Insitu Constructora - Construcción de Calidad')
 @section('description', 'Constructora especializada en proyectos residenciales y comerciales. Calidad, innovación y compromiso en cada proyecto.')
 
 @section('content')
