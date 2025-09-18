@@ -12,7 +12,7 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Crear directorio de la app
 WORKDIR /app
 
-# ---- Etapa 1: Composer deps (cache eficiente)
+# ---- Etapa 1: Composer deps
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
@@ -20,13 +20,14 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 COPY package.json package-lock.json* vite.config.js ./
 RUN npm install
 
-# ---- Etapa 3: copiar todo el código (incluye artisan y resources)
+# ---- Etapa 3: copiar todo el código
 COPY . .
 
-# ---- Etapa 4: build frontend (asegura que public/build/ exista al final)
-RUN npm run build
+# ---- Etapa 4: build frontend
+RUN npm run build \
+    && ls -la public/build   # 👈 verifica que exista manifest.json
 
-# Ejecutar scripts de composer que requieren artisan
+# Ejecutar scripts de composer
 RUN composer run-script post-autoload-dump || true
 
 # Permisos para Laravel
@@ -35,10 +36,9 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && touch storage/logs/laravel.log \
     && chown www-data:www-data storage/logs/laravel.log
 
-# Copiar entrypoint (si lo usas para limpiar caches)
+# Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Puerto dinámico de Render
