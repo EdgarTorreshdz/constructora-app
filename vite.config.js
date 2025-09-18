@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [
@@ -8,12 +7,13 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        tailwindcss(),
     ],
     build: {
-        outDir: 'public/build',
         manifest: true,
-        emptyOutDir: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        },
+        manifestFile: 'public/build/manifest.json', // 👈 forzamos ubicación
     },
-    base: '/build/',   // 👈 MUY IMPORTANTE para que apunte a /build/
 });
