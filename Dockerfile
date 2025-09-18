@@ -16,16 +16,15 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# ---- Etapa 2: Node deps y build
+# ---- Etapa 2: Node deps
 COPY package.json package-lock.json* vite.config.js ./
 RUN npm install
 
-# Copiar resources (necesario para vite build)
-COPY resources ./resources
-RUN npm run build
-
-# ---- Etapa 3: copiar todo el código (artisan, rutas, config, etc.)
+# ---- Etapa 3: copiar todo el código (incluye artisan y resources)
 COPY . .
+
+# ---- Etapa 4: build frontend (asegura que public/build/ exista al final)
+RUN npm run build
 
 # Ejecutar scripts de composer que requieren artisan
 RUN composer run-script post-autoload-dump || true
