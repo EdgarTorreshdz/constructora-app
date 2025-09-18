@@ -19,8 +19,12 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
-# Generar caches de Laravel
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+# Copiar y dar permisos al entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Puerto dinámico de Render
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+# Usamos entrypoint para preparar y luego correr Laravel
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Laravel server con puerto dinámico de Render
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
