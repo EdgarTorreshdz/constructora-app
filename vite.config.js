@@ -11,8 +11,9 @@ export default defineConfig({
         tailwindcss(),
     ],
     build: {
-        manifest: true,            // genera manifest.json
-        outDir: 'public/build',    // salida en public/build
-        emptyOutDir: true,         // limpia antes de compilar
+        manifest: true,
+        manifestFile: 'public/build/manifest.json',  // 👈 forzar ubicación correcta
+        outDir: 'public/build',
+        emptyOutDir: true,
     },
 });
