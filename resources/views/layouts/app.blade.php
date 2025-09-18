@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Insitu Constructora')</title>
+    <title>@yield('title', 'INSITU Constructora')</title>
     <meta name="description" content="@yield('description', 'Constructora especializada en proyectos residenciales y comerciales de alta calidad')">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', 'Insitu Constructora')">
+    <meta property="og:title" content="@yield('title', 'INSITU Constructora')">
     <meta property="og:description" content="@yield('description', 'Constructora especializada en proyectos residenciales y comerciales de alta calidad')">
     <meta property="og:image" content="@yield('image', asset('images/og-image.jpg'))">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="@yield('title', 'Insitu Constructora')">
+    <meta property="twitter:title" content="@yield('title', 'INSITU Constructora')">
     <meta property="twitter:description" content="@yield('description', 'Constructora especializada en proyectos residenciales y comerciales de alta calidad')">
     <meta property="twitter:image" content="@yield('image', asset('images/og-image.jpg'))">
     @verbatim
