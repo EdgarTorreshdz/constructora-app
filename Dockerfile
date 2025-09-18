@@ -26,4 +26,4 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && chown www-data:www-data storage/logs/laravel.log
 
 # Puerto dinámico de Render
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port", "${PORT}"]
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
