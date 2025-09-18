@@ -4,7 +4,9 @@ FROM php:8.2-cli
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     unzip git curl libpq-dev libzip-dev libpng-dev nodejs npm \
-    && docker-php-ext-install pdo pdo_pgsql zip gd
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql zip gd
+
 
 # Instalar Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
